@@ -1,0 +1,806 @@
+db.createCollection("users", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["first_name", "last_name", "phone_number", "address"],
+         properties: {
+            first_name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            last_name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            phone_number: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            address: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("tariffplans", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["name", "description", "cost", "conditions"],
+         properties: {
+            name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            description: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            cost: {
+               bsonType: "decimal",
+               description: "must be a decimal and is required"
+            },
+            conditions: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("accounts", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["user_id", "plan_id", "balance", "creation_date"],
+         properties: {
+            user_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            plan_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            balance: {
+               bsonType: "decimal",
+               description: "must be a decimal and is required"
+            },
+            creation_date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("internettraffic", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["user_id", "volume", "date", "traffic_type"],
+         properties: {
+            user_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            volume: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            traffic_type: {
+               enum: ["download", "upload"],
+               description: "can only be one of the enum values and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("messages", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["sender_id", "receiver_id", "date_time", "text", "type"],
+         properties: {
+            sender_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            receiver_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            date_time: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            text: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            type: {
+               enum: ["SMS", "MMS"],
+               description: "can only be one of the enum values and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("calls", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["caller_id", "receiver_id", "date_time", "duration", "type"],
+         properties: {
+            caller_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            receiver_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            date_time: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            duration: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            type: {
+               enum: ["incoming", "outgoing"],
+               description: "can only be one of the enum values and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("accountservices", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["account_id", "service_id", "start_date", "end_date"],
+         properties: {
+            account_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            service_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            start_date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            end_date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("services", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["description"],
+         properties: {
+            description: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            }
+         }
+      }
+   }
+})
+
+// Добавим 10 пользователей
+db.users.insertMany([
+   {
+      first_name: "John",
+      last_name: "Doe",
+      phone_number: "123456789",
+      address: "123 Main Street"
+   },
+   {
+      first_name: "Alice",
+      last_name: "Smith",
+      phone_number: "987654321",
+      address: "456 Elm Street"
+   },
+   {
+      first_name: "Luisa",
+      last_name: "West",
+      phone_number: "595214321",
+      address: "494 Elm Street"
+   },
+      {
+      first_name: "George",
+      last_name: "Black",
+      phone_number: "987654843",
+      address: "11 Liberty Avenue"
+   },
+      {
+      first_name: "Bob",
+      last_name: "Marley",
+      phone_number: "923444991",
+      address: "66 Music Street"
+   },
+      {
+      first_name: "Darth",
+      last_name: "Vader",
+      phone_number: "988866621",
+      address: "1 Imperial Street"
+   },
+      {
+      first_name: "Jane",
+      last_name: "Plane",
+      phone_number: "887344322",
+      address: "812 Cloth Avenue"
+   },
+      {
+      first_name: "Nick",
+      last_name: "Crosby",
+      phone_number: "987555511",
+      address: "324 Arrow Street"
+   },
+      {
+      first_name: "Jesus",
+      last_name: "Quark",
+      phone_number: "999888553",
+      address: "444 Physic Street"
+   },
+      {
+      first_name: "Cool",
+      last_name: "Aid",
+      phone_number: "977677377",
+      address: "99 FeezyDrinks Street"
+   },
+
+db.createCollection("users", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["first_name", "last_name", "phone_number", "address"],
+         properties: {
+            first_name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            last_name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            phone_number: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            address: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("tariffplans", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["name", "description", "cost", "conditions"],
+         properties: {
+            name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            description: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            cost: {
+               bsonType: "int",
+               description: "must be a int and is required"
+            },
+            conditions: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("acconts", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["user_id", "plan_id", "balance", "creation_date"],
+         properties: {
+            user_id: {
+               bsonType: "objectId",
+               description: "must be an objId and is required"
+            },
+            plan_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            balance: {
+               bsonType: "int",
+               description: "must be a decimal and is required"
+            },
+            creation_date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("internettraffic", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["user_id", "volume", "date", "traffic_type"],
+         properties: {
+            user_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            volume: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            traffic_type: {
+               enum: ["download", "upload"],
+               description: "can only be one of the enum values and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("messages", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["sender_id", "receiver_id", "date_time", "text", "type"],
+         properties: {
+            sender_id: {
+               bsonType: "objectId",
+            },
+            receiver_id: {
+               bsonType: "objectId",
+            },
+            date_time: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            text: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            type: {
+               enum: ["SMS", "MMS"],
+               description: "can only be one of the enum values and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("calls", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["caller_id", "receiver_id", "date_time", "duration", "type"],
+         properties: {
+            caller_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            receiver_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            date_time: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            duration: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            type: {
+               enum: ["incoming", "outgoing"],
+               description: "can only be one of the enum values and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("accountservices", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["account_id", "service_id", "start_date", "end_date"],
+         properties: {
+            account_id: {
+               bsonType: "objectId",
+               description: "must be an objId and is required"
+            },
+            service_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            start_date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            end_date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("services", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["description", "cost", "name"],
+         properties: {
+            description: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            cost: {
+               bsonType: "int",
+               description: "must be int and is required"
+            }
+         }
+      }
+   }
+})
+
+db.users.insertMany([
+   {
+      first_name: "John",
+      last_name: "Doe",
+      phone_number: "123456789",
+      address: "123 Main Street"
+   },
+   {
+      first_name: "Alice",
+      last_name: "Smith",
+      phone_number: "987654321",
+      address: "456 Elm Street"
+   },
+   {
+      first_name: "Luisa",
+      last_name: "West",
+      phone_number: "595214321",
+      address: "494 Elm Street"
+   },
+      {
+      first_name: "George",
+      last_name: "Black",
+      phone_number: "987654843",
+      address: "11 Liberty Avenue"
+   },
+      {
+      first_name: "Bob",
+      last_name: "Marley",
+      phone_number: "923444991",
+      address: "66 Music Street"
+   },
+      {
+      first_name: "Darth",
+      last_name: "Vader",
+      phone_number: "988866621",
+      address: "1 Imperial Street"
+   },
+      {
+      first_name: "Jane",
+      last_name: "Plane",
+      phone_number: "887344322",
+      address: "812 Cloth Avenue"
+   },
+      {
+      first_name: "Nick",
+      last_name: "Crosby",
+      phone_number: "987555511",
+      address: "324 Arrow Street"
+   },
+      {
+      first_name: "Jesus",
+      last_name: "Quark",
+      phone_number: "999888553",
+      address: "444 Physic Street"
+   },
+      {
+      first_name: "Cool",
+      last_name: "Aid",
+      phone_number: "977677377",
+      address: "99 FeezyDrinks Street"
+   },
+]);
+
+db.messages.find()
+
+db.messages.insertOne({
+    sender_id: ObjectId("662b5c7fa3d5b03a37e34497"),
+      receiver_id: ObjectId("662b5c7fa3d5b03a37e344a0"),
+      date_time: ISODate("2024-04-12T10:00:00Z"),
+      text: "Привет",
+      type: "SMS"});
+
+db.messages.insertMany([
+   {
+      sender_id: ObjectId("662b5c7fa3d5b03a37e34497"),
+      receiver_id: ObjectId("662b5c7fa3d5b03a37e344a0"),
+      date_time: ISODate("2024-04-12T08:00:00Z"),
+      text: "Привет, как дела?",
+      type: "SMS"
+   },
+   {
+      sender_id: ObjectId("662b5c7fa3d5b03a37e344a0"),
+      receiver_id: ObjectId("662b5c7fa3d5b03a37e34497"),
+      date_time: ISODate("2024-04-12T09:00:00Z"),
+      text: "Всё отлично, спасибо!",
+      type: "SMS"
+   },
+      {
+      sender_id: ObjectId("662b5c7fa3d5b03a37e344a0"),
+      receiver_id: ObjectId("662b5c7fa3d5b03a37e3449c"),
+      date_time: ISODate("2024-04-12T09:10:00Z"),
+      text: "Джон, вернулся в город!",
+      type: "SMS"
+   },
+         {
+      sender_id: ObjectId("662b5c7fa3d5b03a37e3449c"),
+      receiver_id: ObjectId("662b5c7fa3d5b03a37e344a0"),
+      date_time: ISODate("2024-04-12T09:10:00Z"),
+      text: "Невозможно, когда будет завершено строительство звезды смерти?",
+      type: "SMS"
+   },
+            {
+      sender_id: ObjectId("662b5c7fa3d5b03a37e3449c"),
+      receiver_id: ObjectId("662b5c7fa3d5b03a37e344a0"),
+      date_time: ISODate("2024-04-12T09:10:00Z"),
+      text: "Ой, неважно, рад его возвращению)",
+      type: "SMS"
+   },
+
+]);
+
+// Создаем массив объектов для планов
+var plans = [
+    { name: "Plan 1", description: "Description for Plan 1", cost: 10.00, conditions: "Conditions for Plan 1" },
+    { name: "Plan 2", description: "Description for Plan 2", cost: 20.00, conditions: "Conditions for Plan 2" },
+    { name: "Plan 3", description: "Description for Plan 3", cost: 30.00, conditions: "Conditions for Plan 3" },
+    { name: "Plan 4", description: "Description for Plan 4", cost: 40.00, conditions: "Conditions for Plan 4" },
+    { name: "Plan 5", description: "Description for Plan 5", cost: 50.00, conditions: "Conditions for Plan 5" },
+    { name: "Plan 6", description: "Description for Plan 6", cost: 60.00, conditions: "Conditions for Plan 6" },
+    { name: "Plan 7", description: "Description for Plan 7", cost: 70.00, conditions: "Conditions for Plan 7" },
+    { name: "Plan 8", description: "Description for Plan 8", cost: 80.00, conditions: "Conditions for Plan 8" },
+    { name: "Plan 9", description: "Description for Plan 9", cost: 90.00, conditions: "Conditions for Plan 9" },
+    { name: "Plan 10", description: "Description for Plan 10", cost: 100.00, conditions: "Conditions for Plan 10" }
+];
+
+// Вставляем массив планов в коллекцию tariffplans
+db.tariffplans.insertMany(plans);
+
+
+db.accounts.insertMany([
+  {
+    "user_id": ObjectId("662b5c7fa3d5b03a37e34497"),
+    "plan_id": 1,
+    "balance": 100.00,
+    "creation_date": ISODate("2024-04-26T00:00:00Z")
+  },
+  {
+    "user_id": ObjectId("662b5c7fa3d5b03a37e34498"),
+    "plan_id": 2,
+    "balance": 50.00,
+    "creation_date": ISODate("2024-04-26T00:00:00Z")
+  },
+  {
+    "user_id": ObjectId("662b5c7fa3d5b03a37e34499"),
+    "plan_id": 1,
+    "balance": 200.00,
+    "creation_date": ISODate("2024-04-26T00:00:00Z")
+  },
+  {
+    "user_id": ObjectId("662b5c7fa3d5b03a37e3449a"),
+    "plan_id": 3,
+    "balance": 75.00,
+    "creation_date": ISODate("2024-04-26T00:00:00Z")
+  },
+  {
+    "user_id": ObjectId("662b5c7fa3d5b03a37e3449b"),
+    "plan_id": 2,
+    "balance": 150.00,
+    "creation_date": ISODate("2024-04-26T00:00:00Z")
+  },
+  {
+    "user_id": ObjectId("662b5c7fa3d5b03a37e3449c"),
+    "plan_id": 1,
+    "balance": 300.00,
+    "creation_date": ISODate("2024-04-26T00:00:00Z")
+  },
+  {
+    "user_id": ObjectId("662b5c7fa3d5b03a37e3449d"),
+    "plan_id": 3,
+    "balance": 25.00,
+    "creation_date": ISODate("2024-04-26T00:00:00Z")
+  },
+  {
+    "user_id": ObjectId("662b5c7fa3d5b03a37e3449e"),
+    "plan_id": 1,
+    "balance": 350.00,
+    "creation_date": ISODate("2024-04-26T00:00:00Z")
+  },
+  {
+    "user_id": ObjectId("662b5c7fa3d5b03a37e3449f"),
+    "plan_id": 2,
+    "balance": 100.00,
+    "creation_date": ISODate("2024-04-26T00:00:00Z")
+  },
+  {
+    "user_id": ObjectId("662b5c7fa3d5b03a37e344a0"),
+    "plan_id": 3,
+    "balance": 125.00,
+    "creation_date": ISODate("2024-04-26T00:00:00Z")
+  }
+]
+);
+
+db.services.insertMany([
+  {
+    "name": "Voice Calling",
+    "description": "Unlimited voice calls within the country",
+    "cost": 10.00
+  },
+  {
+    "name": "SMS Messaging",
+    "description": "Unlimited SMS messaging within the country",
+    "cost": 5.00
+  },
+  {
+    "name": "Data Plan",
+    "description": "10GB data plan with high-speed internet",
+    "cost": 20.00
+  },
+  {
+    "name": "International Calling",
+    "description": "International calling to select countries",
+    "cost": 15.00
+  },
+  {
+    "name": "Premium Subscription",
+    "description": "Access to premium content and services",
+    "cost": 30.00
+  }
+]);
+
+db.accountservices.insertMany([
+  {
+    "account_id": ObjectId("662b841e58148c2558543079"),
+    "service_id": 1,
+    "start_date": ISODate("2024-04-12T08:00:00Z"),
+    "end_date": ISODate("2024-04-19T08:00:00Z")
+  },
+  {
+    "account_id": ObjectId("662b841e58148c255854307a"),
+    "service_id": 2,
+    "start_date": ISODate("2024-04-12T08:00:00Z"),
+    "end_date": ISODate("2024-04-19T08:00:00Z")
+  },
+  {
+    "account_id": ObjectId("662b841e58148c255854307b"),
+    "service_id": 5,
+    "start_date": ISODate("2024-04-12T08:00:00Z"),
+    "end_date": ISODate("2024-04-19T08:00:00Z")
+  },
+  {
+    "account_id": ObjectId("662b841e58148c255854307c"),
+    "service_id": 4,
+    "start_date": ISODate("2024-04-12T08:00:00Z"),
+    "end_date": ISODate("2024-04-19T08:00:00Z")
+  },
+  {
+    "account_id": ObjectId("662b841e58148c255854307d"),
+    "service_id": 5,
+    "start_date": ISODate("2024-04-12T08:00:00Z"),
+    "end_date": ISODate("2024-04-19T08:00:00Z")
+  },
+  {
+    "account_id": ObjectId("662b841e58148c255854307e"),
+    "service_id": 1,
+    "start_date": ISODate("2024-04-12T08:00:00Z"),
+    "end_date": ISODate("2024-04-19T08:00:00Z")
+  },
+  {
+    "account_id": ObjectId("662b841e58148c255854307f"),
+    "service_id": 2,
+    "start_date": ISODate("2024-04-12T08:00:00Z"),
+    "end_date": ISODate("2024-04-19T08:00:00Z")
+  },
+  {
+    "account_id": ObjectId("662b841e58148c2558543080"),
+    "service_id": 3,
+    "start_date": ISODate("2024-04-12T08:00:00Z"),
+    "end_date": ISODate("2024-04-19T08:00:00Z")
+  },
+  {
+    "account_id": ObjectId("662b841e58148c2558543081"),
+    "service_id": 3,
+    "start_date": ISODate("2024-04-12T08:00:00Z"),
+    "end_date": ISODate("2024-04-19T08:00:00Z")
+  },
+  {
+    "account_id": ObjectId("662b841e58148c2558543082"),
+    "service_id": 4,
+    "start_date": ISODate("2024-04-12T08:00:00Z"),
+    "end_date": ISODate("2024-04-19T08:00:00Z")
+  }
+]);
+
+db.accounts.createIndex({ "plan_id": 1 })
+
+db.accounts.find({ "plan_id" : 1})
+
+db.accounts.aggregate([
+  {
+    $lookup: {
+      from: "users",
+      localField: "user_id",
+      foreignField: "_id",
+      as: "user_info"
+    }
+  },
+  {
+    $unwind: "$user_info"
+  },
+  {
+    $project: {
+      "_id": 1,
+      "user_id": 1,
+      "balance": 1,
+      "creation_date": 1,
+      "user_first_name": "$user_info.first_name",
+      "user_last_name": "$user_info.last_name",
+      "user_phone_number": "$user_info.phone_number",
+      "user_address": "$user_info.address"
+    }
+  }
+])

@@ -1,0 +1,274 @@
+db.createCollection("users", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["first_name", "last_name", "phone_number", "address"],
+         properties: {
+            first_name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            last_name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            phone_number: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            address: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("tariffplans", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["name", "description", "cost", "conditions"],
+         properties: {
+            name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            description: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            cost: {
+               bsonType: "decimal",
+               description: "must be a decimal and is required"
+            },
+            conditions: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("accounts", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["user_id", "plan_id", "balance", "creation_date"],
+         properties: {
+            user_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            plan_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            balance: {
+               bsonType: "decimal",
+               description: "must be a decimal and is required"
+            },
+            creation_date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("internettraffic", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["user_id", "volume", "date", "traffic_type"],
+         properties: {
+            user_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            volume: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            traffic_type: {
+               enum: ["download", "upload"],
+               description: "can only be one of the enum values and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("messages", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["sender_id", "receiver_id", "date_time", "text", "type"],
+         properties: {
+            sender_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            receiver_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            date_time: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            text: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            type: {
+               enum: ["SMS", "MMS"],
+               description: "can only be one of the enum values and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("calls", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["caller_id", "receiver_id", "date_time", "duration", "type"],
+         properties: {
+            caller_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            receiver_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            date_time: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            duration: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            type: {
+               enum: ["incoming", "outgoing"],
+               description: "can only be one of the enum values and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("accountservices", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["account_id", "service_id", "start_date", "end_date"],
+         properties: {
+            account_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            service_id: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            start_date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            },
+            end_date: {
+               bsonType: "date",
+               description: "must be a date and is required"
+            }
+         }
+      }
+   }
+})
+
+db.createCollection("services", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: ["description"],
+         properties: {
+            description: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            }
+         }
+      }
+   }
+})
+
+// Добавим 10 пользователей
+db.users.insertMany([
+   {
+      first_name: "John",
+      last_name: "Doe",
+      phone_number: "123456789",
+      address: "123 Main Street"
+   },
+   {
+      first_name: "Alice",
+      last_name: "Smith",
+      phone_number: "987654321",
+      address: "456 Elm Street"
+   },
+   {
+      first_name: "Luisa",
+      last_name: "West",
+      phone_number: "595214321",
+      address: "494 Elm Street"
+   },
+      {
+      first_name: "George",
+      last_name: "Black",
+      phone_number: "987654843",
+      address: "11 Liberty Avenue"
+   },
+      {
+      first_name: "Bob",
+      last_name: "Marley",
+      phone_number: "923444991",
+      address: "66 Music Street"
+   },
+      {
+      first_name: "Darth",
+      last_name: "Vader",
+      phone_number: "988866621",
+      address: "1 Imperial Street"
+   },
+      {
+      first_name: "Jane",
+      last_name: "Plane",
+      phone_number: "887344322",
+      address: "812 Cloth Avenue"
+   },
+      {
+      first_name: "Nick",
+      last_name: "Crosby",
+      phone_number: "987555511",
+      address: "324 Arrow Street"
+   },
+      {
+      first_name: "Jesus",
+      last_name: "Quark",
+      phone_number: "999888553",
+      address: "444 Physic Street"
+   },
+      {
+      first_name: "Cool",
+      last_name: "Aid",
+      phone_number: "977677377",
+      address: "99 FeezyDrinks Street"
+   },
